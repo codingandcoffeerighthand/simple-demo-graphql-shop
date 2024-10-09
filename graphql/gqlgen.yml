@@ -1,0 +1,8 @@
+schema: schema.graphql
+
+models:
+  Account:
+    model: shop-graphql-demo/graphql.Account
+    fields:
+      orders:
+        resolver: true
