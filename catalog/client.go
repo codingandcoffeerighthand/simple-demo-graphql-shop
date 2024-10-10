@@ -7,27 +7,27 @@ import (
 	"google.golang.org/grpc"
 )
 
-type client struct {
+type Client struct {
 	conn    *grpc.ClientConn
 	service pb.CatalogServiceClient
 }
 
-func NewClient(url string) (*client, error) {
+func NewClient(url string) (*Client, error) {
 	conn, err := grpc.NewClient(url)
 	if err != nil {
 		return nil, err
 	}
-	return &client{
+	return &Client{
 		conn:    conn,
 		service: pb.NewCatalogServiceClient(conn),
 	}, nil
 }
 
-func (c *client) Close() error {
+func (c *Client) Close() error {
 	return c.conn.Close()
 }
 
-func (c *client) CreateProduct(ctx context.Context, name, description string, price float64) (*Product, error) {
+func (c *Client) CreateProduct(ctx context.Context, name, description string, price float64) (*Product, error) {
 	resp, err := c.service.CreateProduct(ctx, &pb.CreateProductRequest{
 		Name:        name,
 		Description: description,
@@ -44,7 +44,7 @@ func (c *client) CreateProduct(ctx context.Context, name, description string, pr
 	}, nil
 }
 
-func (c *client) GetProduct(ctx context.Context, id string) (*Product, error) {
+func (c *Client) GetProduct(ctx context.Context, id string) (*Product, error) {
 	resp, err := c.service.GetProduct(ctx, &pb.GetProductRequests{Id: id})
 	if err != nil {
 		return nil, err
@@ -57,7 +57,7 @@ func (c *client) GetProduct(ctx context.Context, id string) (*Product, error) {
 	}, nil
 }
 
-func (c *client) GetProducts(ctx context.Context, skip, take uint64, query string, ids []string) ([]Product, error) {
+func (c *Client) GetProducts(ctx context.Context, skip, take uint64, query string, ids []string) ([]Product, error) {
 	resp, err := c.service.GetProducts(ctx, &pb.GetProductsRequest{Skip: skip, Take: take, Query: query, Ids: ids})
 	if err != nil {
 		return nil, err

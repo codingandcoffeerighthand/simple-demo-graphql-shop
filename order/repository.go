@@ -6,7 +6,6 @@ import (
 	"fmt"
 
 	"github.com/lib/pq"
-	_ "github.com/lib/pq"
 )
 
 type Repository interface {

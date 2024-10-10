@@ -20,7 +20,7 @@ type OrderedProduct struct {
 	Name        string
 	Description string
 	Price       float64
-	Quantity    uint
+	Quantity    uint32
 }
 type Service interface {
 	CreateOrder(ctx context.Context, accountID string, products []OrderedProduct) (*Order, error)
@@ -34,7 +34,7 @@ type orderService struct {
 func (s *orderService) CreateOrder(ctx context.Context, accountID string, products []OrderedProduct) (*Order, error) {
 	o := Order{
 		ID:        ksuid.New().String(),
-		CreatedAt: time.Now(),
+		CreatedAt: time.Now().UTC(),
 		AccountID: accountID,
 		Products:  products,
 	}
