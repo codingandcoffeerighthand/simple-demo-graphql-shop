@@ -1,4 +1,4 @@
-db_string: "postgresql://postgres:postgres@localhost:5432/shop"
-account_service: "http://localhost:5000"
-catalog_service: "http://localhost:5001"
-
+db_string: "postgresql://postgres:postgres@order_db:5432/eshop?sslmode=disable"
+account_service: "account:8000"
+catalog_service: "catalog:8000"
+port : 8000

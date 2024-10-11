@@ -1,2 +1,2 @@
-port: 8002
-db_string: "host=localhost port=5432 user=postgres password=postgres dbname=postgres sslmode=disable"
+db_string: "http://catalog_db:9200"
+port: 8000

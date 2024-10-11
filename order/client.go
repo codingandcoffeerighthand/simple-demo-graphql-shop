@@ -69,7 +69,18 @@ func (c *Client) GetOrderForAccount(ctx context.Context, accountID string) ([]Or
 		}
 		ord.CreatedAt = time.Time{}
 		ord.CreatedAt.UnmarshalBinary(o.CreatedAt)
-
+		products := []OrderedProduct{}
+		for _, p := range o.Products {
+			products = append(products, OrderedProduct{
+				ID:          p.Id,
+				Name:        p.Name,
+				Price:       p.Price,
+				Quantity:    p.Quantity,
+				Description: p.Description,
+			})
+		}
+		ord.Products = products
+		orders = append(orders, ord)
 	}
 	return orders, nil
 }

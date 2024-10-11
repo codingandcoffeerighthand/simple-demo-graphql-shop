@@ -24,6 +24,7 @@ func main() {
 			}
 			repo, err := account.NewPostgresRepository(cfg.DBString)
 			if err != nil {
+				log.Printf("db string %s", cfg.DBString)
 				return fmt.Errorf("failed to create postgres repository: %w", err)
 			}
 			cleanUp = repo.Close

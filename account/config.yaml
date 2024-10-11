@@ -1,2 +1,2 @@
-db_string: "postgres://postgres:postgres@localhost:5432/finance-demo?sslmode=disable"
-port: 8001
+db_string: "postgres://postgres:postgres@account_db/eshop?sslmode=disable"
+port: 8000

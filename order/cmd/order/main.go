@@ -22,6 +22,7 @@ func main() {
 			}
 			repo, err := order.NewOrderRepository(cfg.DBString)
 			if err != nil {
+				log.Printf("db string %s", cfg.DBString)
 				return err
 			}
 			cleanUp = repo.Close

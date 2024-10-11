@@ -1,8 +1,65 @@
-version: '3'
 services:
+  account_db:
+    build:
+      context: ./account
+      dockerfile: ./db.dockerfile  
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=eshop
+  order_db:
+    build:
+      context: ./order
+      dockerfile: ./db.dockerfile
+    environment: 
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=eshop
+  catalog_db:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.6.2
+    environment:
+      - discovery.type=single-node
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    cap_add:
+      - IPC_LOCK
+
   account:
     build: 
       context: .
       dockerfile: ./account/app.dockerfile
+    depends_on:
+      - account_db
+
+  catalog:
+    build: 
+      context: .
+      dockerfile: ./catalog/app.dockerfile
+    depends_on:
+      - catalog_db
+
+  order:
+    build: 
+      context: .
+      dockerfile: ./order/app.dockerfile
+    depends_on:
+      - order_db
+
+  graphql:
+    build: 
+      context: .
+      dockerfile: ./graphql/app.dockerfile
+    depends_on:
+      - account
+      - catalog
     ports:
-      - "8001:8001"
+      - 8000:8000
+    environment:
+      - ACCOUNT_SERVICE_URL="account:8000"
+      - CATALOG_SERVICE_URL="catalog:8000"
+      - ORDER_SERVICE_URL="order:8000"

@@ -23,6 +23,7 @@ func main() {
 			}
 			repo, err := catalog.NewElasticRepository(cfg.DBString)
 			if err != nil {
+				log.Printf("db string %s", cfg.DBString)
 				return err
 			}
 			cleanUp = repo.Close
