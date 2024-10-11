@@ -51,7 +51,7 @@ func (r *queryResolver) Products(ctx context.Context, pagination *PaginationInpu
 		if err != nil {
 			return nil, err
 		}
-		return []*Product{&Product{
+		return []*Product{{
 			ID:          r.ID,
 			Name:        r.Name,
 			Description: r.Description,

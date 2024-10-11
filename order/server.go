@@ -28,12 +28,12 @@ func ListenGRPC(s Service, accountUrl, catalogUrl string, port int) error {
 	srv := grpc.NewServer()
 	accountClient, err := account.NewClient(accountUrl)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to create account client: %w", err)
 	}
 	catalogClient, err := catalog.NewClient(catalogUrl)
 	if err != nil {
 		accountClient.Close()
-		return err
+		return fmt.Errorf("failed to create catalog client: %w", err)
 	}
 	sv := &grpcServer{
 		service:       s,

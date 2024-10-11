@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 type Client struct {
@@ -14,7 +15,7 @@ type Client struct {
 }
 
 func NewClient(orderUrl string) (*Client, error) {
-	conn, err := grpc.NewClient(orderUrl)
+	conn, err := grpc.NewClient(orderUrl, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		return nil, err
 	}

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"shop-graphql-demo/catalog"
 
@@ -34,6 +35,7 @@ func main() {
 	}
 	defer cleanUp()
 	cmd.Flags().String("config", "", "config file")
+	fmt.Println("catalog-srv starting")
 	if err := cmd.Execute(); err != nil {
 		log.Fatal(err)
 	}

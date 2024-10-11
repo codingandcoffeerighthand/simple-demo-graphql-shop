@@ -2,6 +2,7 @@
 package main
 
 import (
+	"fmt"
 	"shop-graphql-demo/account"
 	"shop-graphql-demo/catalog"
 	"shop-graphql-demo/order"
@@ -21,20 +22,20 @@ func NewGraphQLServer(
 
 	accountClient, err := account.NewClient(accountUrl)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to create account client: %w", err)
 	}
 
 	catalogClient, err := catalog.NewClient(catalogUrl)
 	if err != nil {
 		accountClient.Close()
-		return nil, err
+		return nil, fmt.Errorf("failed to create catalog client: %w", err)
 	}
 
 	orderClient, err := order.NewClient(orderUrl)
 	if err != nil {
 		accountClient.Close()
 		catalogClient.Close()
-		return nil, err
+		return nil, fmt.Errorf("failed to create order client: %w", err)
 	}
 	return &Server{accountClient, catalogClient, orderClient}, nil
 }
