@@ -3,6 +3,8 @@ package main
 
 import (
 	"shop-graphql-demo/account"
+	"shop-graphql-demo/catalog"
+	"shop-graphql-demo/order"
 
 	"github.com/99designs/gqlgen/graphql"
 )
@@ -45,7 +47,7 @@ func (s *Server) Query() QueryResolver {
 	return &queryResolver{server: s}
 }
 
-func (s *Server) AccountResolver() AccountResolver {
+func (s *Server) Account() AccountResolver {
 	return &accountResolver{server: s}
 }
 
